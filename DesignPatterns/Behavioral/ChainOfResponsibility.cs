@@ -29,7 +29,7 @@ namespace DesignPatterns.Behavioral
 
             var criticalProblem = new Problem(ProblemSeverity.Critical);
             frontDesk.SolveProblem(criticalProblem);
-            // The problem should go threw [FrontDesk] -> [Lead] -> [Engineer]
+            // The problem should go through [FrontDesk] -> [Lead] -> [Engineer]
             Assert.True(criticalProblem.Solved);
             Assert.NotEqual(frontDesk, criticalProblem.SolvedBy);
             Assert.NotEqual(lead, criticalProblem.SolvedBy);
