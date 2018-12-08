@@ -10,15 +10,15 @@ namespace DesignPatterns.Creational
             Assert.Equal(Government.Instance, instance);
         }
 
-        private class Government
+        /* Singleton */
+        private sealed class Government
         {
             private Government()
             {
+                // Singleton constructor is private, it can only have one instance.
             }
 
-            private static Government _instance;
-
-            public static Government Instance => _instance ?? (_instance = new Government());
+            public static Government Instance { get; } = new Government();
         }
     }
 }
