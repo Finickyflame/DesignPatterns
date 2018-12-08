@@ -30,7 +30,7 @@ Patterns that define ways to compose objects to obtain new functionality.
 
 Patterns that specifically concern the communication between objects.
 
-- [ ]  **Chain of responsibility** delegates commands to a chain of processing objects.
+- [x]  [Chain of responsibility](DesignPatterns/Behavioral/ChainOfResponsibility.cs) delegates commands to a chain of processing objects.
 - [ ]  **Command** creates objects which encapsulate actions and parameters.
 - [ ]  **Interpreter** implements a specialized language.
 - [ ]  **Iterator** accesses the elements of an object sequentially without exposing its underlying representation.
