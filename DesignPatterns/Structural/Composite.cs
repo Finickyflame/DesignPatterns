@@ -17,7 +17,7 @@ namespace DesignPatterns.Structural
             var movieBundle = new MovieBundle(firstMovie);
             Assert.Equal("Bundle of: Slow and Safe", movieBundle.GetTitle());
 
-            movieBundle.AddBook(secondMovie);
+            movieBundle.AddMovie(secondMovie);
             Assert.Equal("Bundle of: Slow and Safe, The Beginnator", movieBundle.GetTitle());
         }
 
@@ -46,21 +46,21 @@ namespace DesignPatterns.Structural
 
         private class MovieBundle : IMovie
         {
-            private readonly List<IMovie> _books;
+            private readonly List<IMovie> _movies;
 
             public MovieBundle(params IMovie[] movies)
             {
-                this._books = new List<IMovie>(movies);
+                this._movies = new List<IMovie>(movies);
             }
 
-            public void AddBook(params IMovie[] movies)
+            public void AddMovie(params IMovie[] movies)
             {
-                this._books.AddRange(movies);
+                this._movies.AddRange(movies);
             }
 
             public string GetTitle()
             {
-                return "Bundle of: " + string.Join(", ", this._books.Select(b => b.GetTitle()));
+                return "Bundle of: " + string.Join(", ", this._movies.Select(b => b.GetTitle()));
             }
         }
 
