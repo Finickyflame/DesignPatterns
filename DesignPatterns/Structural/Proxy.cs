@@ -13,13 +13,13 @@ namespace DesignPatterns.Structural
         }
 
         /* Subject */
-        private interface IFriend
+        public interface IFriend
         {
             void Talk();
         }
 
         /* Real subject */
-        private class Friend : IFriend
+        public class Friend : IFriend
         {
             public void Talk()
             {
@@ -27,7 +27,7 @@ namespace DesignPatterns.Structural
         }
 
         /* Proxy */
-        private class FriendOverPhone : IFriend
+        public class FriendOverPhone : IFriend
         {
             private Friend Friend { get; set; }
 

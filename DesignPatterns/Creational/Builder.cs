@@ -27,14 +27,14 @@ namespace DesignPatterns.Creational
 
         #region Definition
 
-        private enum Sauce
+        public enum Sauce
         {
             Tomato,
             Spicy
         }
 
         [Flags]
-        private enum Topping
+        public enum Topping
         {
             Sausage = 1,
             Pepperoni = 2,
@@ -43,7 +43,7 @@ namespace DesignPatterns.Creational
             Bacon = 16
         }
 
-        private class Pizza
+        public class Pizza
         {
             public Sauce Sauce { get; private set; }
 
@@ -60,7 +60,7 @@ namespace DesignPatterns.Creational
             }
         }
 
-        private class PizzaChef
+        public class PizzaChef
         {
             private IPizzaRecipe _recipe;
             private readonly Queue<Pizza> _createdPizzas;
@@ -89,7 +89,7 @@ namespace DesignPatterns.Creational
             }
         }
 
-        private interface IPizzaRecipe
+        public interface IPizzaRecipe
         {
             void PrepareNewPizza();
 
@@ -104,7 +104,7 @@ namespace DesignPatterns.Creational
 
         #region Concrete Implementation
 
-        private abstract class BasePizzaRecipe : IPizzaRecipe
+        public abstract class BasePizzaRecipe : IPizzaRecipe
         {
             protected Pizza Pizza { get; private set; }
 
@@ -122,7 +122,7 @@ namespace DesignPatterns.Creational
             }
         }
 
-        private class PepperoniPizzaRecipe : BasePizzaRecipe
+        public class PepperoniPizzaRecipe : BasePizzaRecipe
         {
             public override void AddSauce()
             {
@@ -135,7 +135,7 @@ namespace DesignPatterns.Creational
             }
         }
 
-        private class SpecialPizzaRecipe : BasePizzaRecipe
+        public class SpecialPizzaRecipe : BasePizzaRecipe
         {
             public override void AddSauce()
             {

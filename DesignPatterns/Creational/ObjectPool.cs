@@ -39,7 +39,7 @@ namespace DesignPatterns.Creational
             Assert.Equal(3, library.InventoryCount);
         }
 
-        private class Book
+        public class Book
         {
             public Book(DateTime purchasedOn)
             {
@@ -49,7 +49,7 @@ namespace DesignPatterns.Creational
             public DateTime PurchasedOn { get; }
         }
 
-        private class Library
+        public class Library
         {
             private readonly Queue<Book> _inventory;
 

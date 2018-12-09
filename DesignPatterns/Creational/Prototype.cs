@@ -22,7 +22,7 @@ namespace DesignPatterns.Creational
         }
 
         #region Definition
-        private abstract class Sheep
+        public abstract class Sheep
         {
             protected Sheep(string color)
             {
@@ -44,7 +44,7 @@ namespace DesignPatterns.Creational
 
         #region Concrete Implementation
 
-        private class BlackSheep : Sheep
+        public class BlackSheep : Sheep
         {
             public BlackSheep()
                 : base("Black")
@@ -57,7 +57,7 @@ namespace DesignPatterns.Creational
             }
         }
 
-        private class WhiteSheep : Sheep
+        public class WhiteSheep : Sheep
         {
             public WhiteSheep()
                 : base("White")

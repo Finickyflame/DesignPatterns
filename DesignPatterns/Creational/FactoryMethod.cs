@@ -17,7 +17,7 @@ namespace DesignPatterns.Creational
         }
 
         #region Definition
-        abstract class Car
+        public abstract class Car
         {
             public abstract string GetMake();
         }
@@ -38,12 +38,12 @@ namespace DesignPatterns.Creational
 
         #region Concrete implementation
 
-        private class MazdaCar : Car
+        public class MazdaCar : Car
         {
             public override string GetMake() => "Mazda";
         }
 
-        private class AudiCar : Car
+        public class AudiCar : Car
         {
             public override string GetMake() => "Audi";
         }

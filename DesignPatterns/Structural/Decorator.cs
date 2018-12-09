@@ -16,7 +16,7 @@ namespace DesignPatterns.Structural
 
         #region Definition
 
-        private interface IMessage
+        public interface IMessage
         {
             string GetMessage();
         }
@@ -25,7 +25,7 @@ namespace DesignPatterns.Structural
 
         #region Concrete Implementation
 
-        private class Message : IMessage
+        public class Message : IMessage
         {
             private readonly string _message;
 
@@ -38,7 +38,7 @@ namespace DesignPatterns.Structural
         }
 
         /* Decorator */
-        private class MessageWithDecoration : IMessage
+        public class MessageWithDecoration : IMessage
         {
             private readonly IMessage _message;
 

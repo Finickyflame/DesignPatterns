@@ -21,7 +21,7 @@ namespace DesignPatterns.Structural
         }
 
         /* Factory */
-        private class AliasGenerator
+        public class AliasGenerator
         {
             private readonly Dictionary<string, Alias> _aliases;
 
@@ -41,7 +41,7 @@ namespace DesignPatterns.Structural
         }
 
         /* FlyWeight */
-        private class Alias : IEquatable<Alias>
+        public class Alias : IEquatable<Alias>
         {
             public Alias(Guid id)
             {

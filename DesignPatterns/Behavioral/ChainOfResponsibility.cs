@@ -38,7 +38,7 @@ namespace DesignPatterns.Behavioral
 
         #region Definition
 
-        private enum ProblemSeverity
+        public enum ProblemSeverity
         {
             NoProblem,
             Simple,
@@ -48,7 +48,7 @@ namespace DesignPatterns.Behavioral
         }
 
         /* Base Handler */
-        private abstract class CustomerSupport
+        public abstract class CustomerSupport
         {
             private CustomerSupport _escalatedSupport;
 
@@ -93,7 +93,7 @@ namespace DesignPatterns.Behavioral
             }
         }
 
-        private class Problem
+        public class Problem
         {
             public Problem(ProblemSeverity severity)
             {
@@ -118,7 +118,7 @@ namespace DesignPatterns.Behavioral
 
         #region Conconcrete Implementation
 
-        private class FrontDesk : CustomerSupport
+        public class FrontDesk : CustomerSupport
         {
             protected override IEnumerable<ProblemSeverity> Responsibilities
             {
@@ -130,7 +130,7 @@ namespace DesignPatterns.Behavioral
             }
         }
 
-        private class Lead : CustomerSupport
+        public class Lead : CustomerSupport
         {
             protected override IEnumerable<ProblemSeverity> Responsibilities
             {
@@ -141,7 +141,7 @@ namespace DesignPatterns.Behavioral
             }
         }
 
-        private class Engineer : CustomerSupport
+        public class Engineer : CustomerSupport
         {
             protected override IEnumerable<ProblemSeverity> Responsibilities
             {
@@ -152,7 +152,7 @@ namespace DesignPatterns.Behavioral
             }
         }
 
-        private class Manager : CustomerSupport
+        public class Manager : CustomerSupport
         {
             protected override IEnumerable<ProblemSeverity> Responsibilities
             {

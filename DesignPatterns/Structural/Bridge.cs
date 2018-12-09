@@ -38,14 +38,14 @@ namespace DesignPatterns.Structural
 
         #region Definition
 
-        private enum FontStyle
+        public enum FontStyle
         {
             Uppercase,
             Normal
         }
 
         /* Bridge */
-        private abstract class Book
+        public abstract class Book
         {
             private readonly string _authorName;
             private readonly string _bookName;
@@ -78,7 +78,7 @@ namespace DesignPatterns.Structural
         }
 
         /* Bridge Implementation */
-        private abstract class BookStyle
+        public abstract class BookStyle
         {
             public abstract string StyleAuthorName(string authorName);
             public abstract string StyleBookName(string bookName);
@@ -88,7 +88,7 @@ namespace DesignPatterns.Structural
 
         #region Concrete Implementation
 
-        private class BookWithAuthorAndName : Book
+        public class BookWithAuthorAndName : Book
         {
             public BookWithAuthorAndName(string authorName, string bookName, FontStyle titleStyle)
                 : base(authorName, bookName, titleStyle)
@@ -98,7 +98,7 @@ namespace DesignPatterns.Structural
             public override string Title => $"{this.AuthorName}'s {this.BookName}";
         }
 
-        private class BookWithNameAndAuthor : Book
+        public class BookWithNameAndAuthor : Book
         {
             public BookWithNameAndAuthor(string authorName, string bookName, FontStyle titleStyle)
                 : base(authorName, bookName, titleStyle)
@@ -108,14 +108,14 @@ namespace DesignPatterns.Structural
             public override string Title => $"{this.BookName} by {this.AuthorName}";
         }
 
-        private class BookStyleUppercase : BookStyle
+        public class BookStyleUppercase : BookStyle
         {
             public override string StyleAuthorName(string authorName) => authorName?.ToUpper();
 
             public override string StyleBookName(string bookName) => bookName?.ToUpper();
         }
 
-        private class BookStyleNormal : BookStyle
+        public class BookStyleNormal : BookStyle
         {
             public override string StyleAuthorName(string authorName) => authorName;
 

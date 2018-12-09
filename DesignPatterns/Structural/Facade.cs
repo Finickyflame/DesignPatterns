@@ -32,7 +32,7 @@ namespace DesignPatterns.Structural
         }
 
         /* Facade */
-        private class EventSystem
+        public class EventSystem
         {
             private readonly SportEventSystem _sportEventSystem;
             private readonly MusicEventSystem _musicEventSystem;
@@ -62,7 +62,7 @@ namespace DesignPatterns.Structural
             }
         }
 
-        private class Event
+        public class Event
         {
             public Event(string title, EventType type, DateTime startsOn, DateTime endsOn)
             {
@@ -78,7 +78,7 @@ namespace DesignPatterns.Structural
             public EventType EventType { get; }
         }
 
-        private enum EventType
+        public enum EventType
         {
             Sport,
             Music
@@ -86,7 +86,7 @@ namespace DesignPatterns.Structural
 
         #region SubSystems
 
-        private class SportEventSystem
+        public class SportEventSystem
         {
             private readonly SportEvent[] _sportEvents;
 
@@ -105,7 +105,7 @@ namespace DesignPatterns.Structural
             }
         }
 
-        private class SportEvent
+        public class SportEvent
         {
 
             public SportEvent(string matchName, DateTime startDate, TimeSpan duration)
@@ -121,7 +121,7 @@ namespace DesignPatterns.Structural
         }
 
 
-        private class MusicEventSystem
+        public class MusicEventSystem
         {
             private readonly MusicEvent[] _musicEvents;
 
@@ -140,7 +140,7 @@ namespace DesignPatterns.Structural
             }
         }
 
-        private class MusicEvent
+        public class MusicEvent
         {
 
             public MusicEvent(string band, DateTime start, DateTime end)
