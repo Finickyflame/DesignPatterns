@@ -23,7 +23,7 @@ namespace DesignPatterns.Structural
 
         #region Definition
 
-        private interface IMovie
+        public interface IMovie
         {
             string GetTitle();
         }
@@ -32,7 +32,7 @@ namespace DesignPatterns.Structural
 
         #region Concrete Implementation
 
-        private class Movie : IMovie
+        public class Movie : IMovie
         {
             private readonly string _title;
 
@@ -44,7 +44,7 @@ namespace DesignPatterns.Structural
             public string GetTitle() => this._title;
         }
 
-        private class MovieBundle : IMovie
+        public class MovieBundle : IMovie
         {
             private readonly List<IMovie> _movies;
 

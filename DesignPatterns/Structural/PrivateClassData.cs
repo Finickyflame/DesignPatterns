@@ -14,7 +14,7 @@ namespace DesignPatterns.Structural
             Assert.Equal(radius * 2 * Math.PI, circle.Circumference);
         }
 
-        private class Circle
+        public class Circle
         {
             public Circle(double radius)
             {
@@ -29,7 +29,7 @@ namespace DesignPatterns.Structural
         }
 
         /* Private class data */
-        private class CircleData
+        public class CircleData
         {
             public CircleData(double radius)
             {

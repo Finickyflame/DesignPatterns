@@ -16,12 +16,12 @@ namespace DesignPatterns.Creational
         }
 
         #region Definition
-        private abstract class Car
+        public abstract class Car
         {
             public abstract string GetMake();
         }
 
-        private interface ICarFactory
+        public interface ICarFactory
         {
             Car CreateCar();
         }
@@ -29,12 +29,12 @@ namespace DesignPatterns.Creational
 
         #region Concrete implementation
 
-        private class MazdaCar : Car
+        public class MazdaCar : Car
         {
             public override string GetMake() => "Mazda";
         }
 
-        private class MazdaCarFactory : ICarFactory
+        public class MazdaCarFactory : ICarFactory
         {
             public Car CreateCar()
             {
@@ -43,12 +43,12 @@ namespace DesignPatterns.Creational
         }
 
 
-        private class AudiCar : Car
+        public class AudiCar : Car
         {
             public override string GetMake() => "Audi";
         }
 
-        private class AudiCarFactory : ICarFactory
+        public class AudiCarFactory : ICarFactory
         {
             public Car CreateCar()
             {

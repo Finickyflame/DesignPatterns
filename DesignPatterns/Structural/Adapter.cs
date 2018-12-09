@@ -17,7 +17,7 @@ namespace DesignPatterns.Structural
 
             var outlet = new AcOutlet(amps: 15);
             var adapter = new UsbAdapter(socket: outlet, maxMAmps: maxUsbPower);
-            
+
             phone.ConnectTo(adapter);
             Assert.True(phone.IsCharging);
 
@@ -27,7 +27,7 @@ namespace DesignPatterns.Structural
 
         #region Definition
 
-        private class Phone
+        public class Phone
         {
             private readonly MAmp _maxMAmps;
             private MAmp _mAmps;
@@ -50,12 +50,12 @@ namespace DesignPatterns.Structural
             }
         }
 
-        private interface IUsbSocket
+        public interface IUsbSocket
         {
             MAmp GetPower();
         }
 
-        private interface IAcSocket
+        public interface IAcSocket
         {
             Amp GetPower();
         }
@@ -64,7 +64,7 @@ namespace DesignPatterns.Structural
 
         #region Concrete Implementation
 
-        private class AcOutlet : IAcSocket
+        public class AcOutlet : IAcSocket
         {
             private readonly Amp _amps;
 
@@ -79,7 +79,7 @@ namespace DesignPatterns.Structural
             }
         }
 
-        private class UsbAdapter : IUsbSocket
+        public class UsbAdapter : IUsbSocket
         {
             private readonly IAcSocket _socket;
             private readonly MAmp _maxMAmps;
@@ -98,7 +98,7 @@ namespace DesignPatterns.Structural
             }
         }
 
-        private class BadUsbAdapter : IUsbSocket
+        public class BadUsbAdapter : IUsbSocket
         {
             private readonly IAcSocket _socket;
 
