@@ -6,55 +6,167 @@ namespace DesignPatterns.Creational
     {
         public override void Execute()
         {
-            ICarFactory carFactory = new AudiCarFactory();
-            Car car = carFactory.CreateCar();
-            Assert.Equal("Audi", car.GetMake());
+            var carDealer = new CarDealer(new VolvoVehicleFactory());
+            Car car = carDealer.Car;
+            Assert.Equal("Volvo", car.GetMake());
 
-            carFactory = new MazdaCarFactory();
-            car = carFactory.CreateCar();
-            Assert.Equal("Mazda", car.GetMake());
+            Truck truck = carDealer.Truck;
+            Assert.Equal("Volvo", truck.GetMake());
+
+
+            carDealer = new CarDealer(new FordVehicleFactory());
+            car = carDealer.Car;
+            Assert.Equal("Ford", car.GetMake());
+
+            truck = carDealer.Truck;
+            Assert.Equal("Ford", truck.GetMake());
         }
 
         #region Definition
+
+        /// <summary>
+        /// Abstract Factory
+        /// </summary>
+        /// <remarks>
+        /// Declares an interface for operations that create abstract products.
+        /// </remarks>
+        public interface IVehicleFactory
+        {
+            Car CreateCar();
+            Truck CreateTruck();
+        }
+
+        /// <summary>
+        /// Abstract Product
+        /// </summary>
+        /// <remarks>
+        /// Declares an interface for a type of product object.
+        /// </remarks>
         public abstract class Car
         {
             public abstract string GetMake();
         }
 
-        public interface ICarFactory
+        /// <summary>
+        /// Abstract Product
+        /// </summary>
+        /// <remarks>
+        /// Declares an interface for a type of product object.
+        /// </remarks>
+        public abstract class Truck
         {
-            Car CreateCar();
+            public abstract string GetMake();
         }
+
+        /// <summary>
+        /// Client
+        /// </summary>
+        /// <remarks>
+        /// Uses interfaces declared by Abstract Factory and Abstract Product classes.
+        /// </remarks>
+        public class CarDealer
+        {
+            public CarDealer(IVehicleFactory vehicleFactory)
+            {
+                this.Car = vehicleFactory.CreateCar();
+                this.Truck = vehicleFactory.CreateTruck();
+            }
+
+            public Car Car { get; }
+
+            public Truck Truck { get; }
+        }
+
         #endregion
 
         #region Concrete implementation
 
-        public class MazdaCar : Car
+        /// <summary>
+        /// Product
+        /// </summary>
+        /// <remarks>
+        /// - Defines a product object to be created by the corresponding concrete factory.
+        /// - Implements the Abstract Product interface.
+        /// </remarks>
+        public class FordCar : Car
         {
-            public override string GetMake() => "Mazda";
+            public override string GetMake() => "Ford";
         }
 
-        public class MazdaCarFactory : ICarFactory
+        /// <summary>
+        /// Product
+        /// </summary>
+        /// <remarks>
+        /// - Defines a product object to be created by the corresponding concrete factory.
+        /// - Implements the Abstract Product interface.
+        /// </remarks>
+        public class FordTruck : Truck
+        {
+            public override string GetMake() => "Ford";
+        }
+
+        /// <summary>
+        /// Concrete Factory
+        /// </summary>
+        /// <remarks>
+        /// Implements the operations to create concrete product objects.
+        /// </remarks>
+        public class FordVehicleFactory : IVehicleFactory
         {
             public Car CreateCar()
             {
-                return new MazdaCar();
+                return new FordCar();
+            }
+
+            public Truck CreateTruck()
+            {
+                return new FordTruck();
             }
         }
 
-
-        public class AudiCar : Car
+        /// <summary>
+        /// Product
+        /// </summary>
+        /// <remarks>
+        /// - Defines a product object to be created by the corresponding concrete factory.
+        /// - Implements the Abstract Product interface.
+        /// </remarks>
+        public class VolvoCar : Car
         {
-            public override string GetMake() => "Audi";
+            public override string GetMake() => "Volvo";
         }
 
-        public class AudiCarFactory : ICarFactory
+        /// <summary>
+        /// Product
+        /// </summary>
+        /// <remarks>
+        /// - Defines a product object to be created by the corresponding concrete factory.
+        /// - Implements the Abstract Product interface.
+        /// </remarks>
+        public class VolvoTruck : Truck
+        {
+            public override string GetMake() => "Volvo";
+        }
+
+        /// <summary>
+        /// Concrete Factory
+        /// </summary>
+        /// <remarks>
+        /// Implements the operations to create concrete product objects.
+        /// </remarks>
+        public class VolvoVehicleFactory : IVehicleFactory
         {
             public Car CreateCar()
             {
-                return new AudiCar();
+                return new VolvoCar();
+            }
+
+            public Truck CreateTruck()
+            {
+                return new VolvoTruck();
             }
         }
+
         #endregion
     }
 }

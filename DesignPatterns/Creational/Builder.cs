@@ -43,6 +43,14 @@ namespace DesignPatterns.Creational
             Bacon = 16
         }
 
+        /// <summary>
+        /// Product
+        /// </summary>
+        /// <remarks>
+        /// - Represents the complex object under construction.
+        /// - Concrete Builder builds the product's internal representation and defines the process by which it's assembled.
+        /// - Includes classes that define the constituent parts, including interfaces for assembling the parts into the final result
+        /// </remarks>
         public class Pizza
         {
             public Sauce Sauce { get; private set; }
@@ -60,6 +68,12 @@ namespace DesignPatterns.Creational
             }
         }
 
+        /// <summary>
+        /// Director
+        /// </summary>
+        /// <remarks>
+        /// Constructs an object using the Builder interface.
+        /// </remarks>
         public class PizzaChef
         {
             private IPizzaRecipe _recipe;
@@ -89,6 +103,12 @@ namespace DesignPatterns.Creational
             }
         }
 
+        /// <summary>
+        /// Builder
+        /// </summary>
+        /// <remarks>
+        /// Specifies an abstract interface for creating parts of a Product object.
+        /// </remarks>
         public interface IPizzaRecipe
         {
             void PrepareNewPizza();
@@ -104,6 +124,14 @@ namespace DesignPatterns.Creational
 
         #region Concrete Implementation
 
+        /// <summary>
+        /// Concrete Builder
+        /// </summary>
+        /// <remarks>
+        /// - Constructs and assembles parts of the product by implementing the Builder interface.
+        /// - Defines and keeps track of the representation it creates.
+        /// - Provides an interface for retrieving the product.
+        /// </remarks>
         public abstract class BasePizzaRecipe : IPizzaRecipe
         {
             protected Pizza Pizza { get; private set; }
@@ -122,6 +150,14 @@ namespace DesignPatterns.Creational
             }
         }
 
+        /// <summary>
+        /// Concrete Builder
+        /// </summary>
+        /// <remarks>
+        /// - Constructs and assembles parts of the product by implementing the Builder interface.
+        /// - Defines and keeps track of the representation it creates.
+        /// - Provides an interface for retrieving the product.
+        /// </remarks>
         public class PepperoniPizzaRecipe : BasePizzaRecipe
         {
             public override void AddSauce()
@@ -135,6 +171,14 @@ namespace DesignPatterns.Creational
             }
         }
 
+        /// <summary>
+        /// Concrete Builder
+        /// </summary>
+        /// <remarks>
+        /// - Constructs and assembles parts of the product by implementing the Builder interface.
+        /// - Defines and keeps track of the representation it creates.
+        /// - Provides an interface for retrieving the product.
+        /// </remarks>
         public class SpecialPizzaRecipe : BasePizzaRecipe
         {
             public override void AddSauce()
