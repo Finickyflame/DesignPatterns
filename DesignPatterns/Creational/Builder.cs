@@ -122,7 +122,7 @@ namespace DesignPatterns.Creational
 
         #endregion
 
-        #region Concrete Implementation
+        #region Concrete Implementations
 
         /// <summary>
         /// Concrete Builder
