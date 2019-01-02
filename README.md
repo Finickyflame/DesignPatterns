@@ -36,7 +36,7 @@ Patterns that specifically concern the communication between objects.
 - [x]  [Iterator](DesignPatterns/Behavioral/Iterator.cs) accesses the elements of an object sequentially without exposing its underlying representation.
 - [x]  [Mediator](DesignPatterns/Behavioral/Mediator.cs) allows loose coupling between classes by being the only class that has detailed knowledge of their methods.
 - [x]  [Memento](DesignPatterns/Behavioral/Memento.cs) provides the ability to restore an object to its previous state (undo).
-- [ ]  [Observer](DesignPatterns/Behavioral/Observer.cs) is a publish/subscribe pattern which allows a number of observer objects to see an event.
+- [x]  [Observer](DesignPatterns/Behavioral/Observer.cs) is a publish/subscribe pattern which allows a number of observer objects to see an event.
 - [ ]  [State](DesignPatterns/Behavioral/State.cs) allows an object to alter its behavior when its internal state changes.
 - [ ]  [Strategy](DesignPatterns/Behavioral/Strategy.cs) allows one of a family of algorithms to be selected on-the-fly at runtime.
 - [ ]  [Template method](DesignPatterns/Behavioral/TemplateMethod.cs) defines the skeleton of an algorithm as an abstract class, allowing its subclasses to provide concrete behavior.
