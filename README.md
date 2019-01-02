@@ -38,6 +38,6 @@ Patterns that specifically concern the communication between objects.
 - [x]  [Memento](DesignPatterns/Behavioral/Memento.cs) provides the ability to restore an object to its previous state (undo).
 - [x]  [Observer](DesignPatterns/Behavioral/Observer.cs) is a publish/subscribe pattern which allows a number of observer objects to see an event.
 - [x]  [State](DesignPatterns/Behavioral/State.cs) allows an object to alter its behavior when its internal state changes.
-- [ ]  [Strategy](DesignPatterns/Behavioral/Strategy.cs) allows one of a family of algorithms to be selected on-the-fly at runtime.
+- [x]  [Strategy](DesignPatterns/Behavioral/Strategy.cs) allows one of a family of algorithms to be selected on-the-fly at runtime.
 - [ ]  [Template method](DesignPatterns/Behavioral/TemplateMethod.cs) defines the skeleton of an algorithm as an abstract class, allowing its subclasses to provide concrete behavior.
 - [ ]  [Visitor](DesignPatterns/Behavioral/Visitor.cs) separates an algorithm from an object structure by moving the hierarchy of methods into one object.
