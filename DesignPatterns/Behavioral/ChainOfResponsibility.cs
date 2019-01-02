@@ -6,6 +6,12 @@ namespace DesignPatterns.Behavioral
 {
     public class ChainOfResponsibility : DesignPattern
     {
+        /// <summary>
+        /// Client
+        /// </summary>
+        /// <remarks>
+        /// Initiates the request to a ConcreteHandler object on the chain.
+        /// </remarks>
         public override void Execute()
         {
             // Create the customer support team
@@ -47,7 +53,13 @@ namespace DesignPatterns.Behavioral
             Critical
         }
 
-        /* Base Handler */
+        /// <summary>
+        /// Handler
+        /// </summary>
+        /// <remarks>
+        /// - Defines an interface for handling the requests.
+        /// - Can implements the successor link.
+        /// </remarks>
         public abstract class CustomerSupport
         {
             private CustomerSupport _escalatedSupport;
@@ -116,8 +128,14 @@ namespace DesignPatterns.Behavioral
 
         #endregion
 
-        #region Conconcrete Implementation
+        #region Concrete Implementations
 
+        /// <summary>
+        /// Concrete Handler
+        /// </summary>
+        /// <remarks>
+        /// Handles requests it is responsible for.
+        /// </remarks>
         public class FrontDesk : CustomerSupport
         {
             protected override IEnumerable<ProblemSeverity> Responsibilities
@@ -130,6 +148,12 @@ namespace DesignPatterns.Behavioral
             }
         }
 
+        /// <summary>
+        /// Concrete Handler
+        /// </summary>
+        /// <remarks>
+        /// Handles requests it is responsible for.
+        /// </remarks>
         public class Lead : CustomerSupport
         {
             protected override IEnumerable<ProblemSeverity> Responsibilities
@@ -141,6 +165,12 @@ namespace DesignPatterns.Behavioral
             }
         }
 
+        /// <summary>
+        /// Concrete Handler
+        /// </summary>
+        /// <remarks>
+        /// Handles requests it is responsible for.
+        /// </remarks>
         public class Engineer : CustomerSupport
         {
             protected override IEnumerable<ProblemSeverity> Responsibilities
@@ -152,6 +182,12 @@ namespace DesignPatterns.Behavioral
             }
         }
 
+        /// <summary>
+        /// Concrete Handler
+        /// </summary>
+        /// <remarks>
+        /// Handles requests it is responsible for.
+        /// </remarks>
         public class Manager : CustomerSupport
         {
             protected override IEnumerable<ProblemSeverity> Responsibilities
