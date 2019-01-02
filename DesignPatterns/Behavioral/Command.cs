@@ -70,7 +70,7 @@ namespace DesignPatterns.Behavioral
         {
             public void ExecuteTasks(params ITask[] tasks)
             {
-                foreach(ITask task in tasks)
+                foreach (ITask task in tasks)
                 {
                     task.Execute();
                 }
@@ -102,6 +102,13 @@ namespace DesignPatterns.Behavioral
 
         #region Concrete Implementations
 
+        /// <summary>
+        /// Concrete Command
+        /// </summary>
+        /// <remarks>
+        /// - Defines a binding between a Receiver object and an action.
+        /// - Implements Execute by invoking the corresponding operation(s) on Receiver.
+        /// </remarks>
         public abstract class HouseTask : ITask
         {
             protected HouseTask(House house)
@@ -114,6 +121,7 @@ namespace DesignPatterns.Behavioral
             public abstract void Execute();
         }
 
+        /// <inheritdoc />
         public class CleanKitchenTask : HouseTask
         {
             public CleanKitchenTask(House house)
@@ -127,6 +135,7 @@ namespace DesignPatterns.Behavioral
             }
         }
 
+        /// <inheritdoc />
         public class CleanBathroomTask : HouseTask
         {
             public CleanBathroomTask(House house)
@@ -140,6 +149,7 @@ namespace DesignPatterns.Behavioral
             }
         }
 
+        /// <inheritdoc />
         public class CleanBedroomTask : HouseTask
         {
             public CleanBedroomTask(House house)
@@ -153,6 +163,7 @@ namespace DesignPatterns.Behavioral
             }
         }
 
+        /// <inheritdoc />
         public class CleanTheWholeHouseTask : HouseTask
         {
             public CleanTheWholeHouseTask(House house)
