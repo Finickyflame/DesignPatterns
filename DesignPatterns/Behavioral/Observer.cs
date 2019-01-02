@@ -61,14 +61,14 @@ namespace DesignPatterns.Behavioral
                 this._listeners = new List<ISensorListener>();
             }
 
-            public void AddListener(ISensorListener reader)
+            public void AddListener(ISensorListener listener)
             {
-                this._listeners.Add(reader);
+                this._listeners.Add(listener);
             }
 
-            public void RemoveListener(ISensorListener reader)
+            public void RemoveListener(ISensorListener listener)
             {
-                this._listeners.Remove(reader);
+                this._listeners.Remove(listener);
             }
 
             protected void NotifyListeners()
