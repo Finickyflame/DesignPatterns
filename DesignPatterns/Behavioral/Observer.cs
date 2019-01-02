@@ -9,27 +9,27 @@ namespace DesignPatterns.Behavioral
         {
             var temperatureSensor = new TemperatureSensor();
 
-            var firstHeater = new Heater(temperatureSensor, maxHeatingTemperature: 18);
-            var secondHeater = new Heater(temperatureSensor, maxHeatingTemperature: 21);
+            var heater = new Heater(temperatureSensor, maxHeatingTemperature: 18); // 64° F
+            var airConditioner = new AirConditioner(temperatureSensor, minCoolingTemperature: 21); // 70° F
 
-            temperatureSensor.Temperature = 17;
-            Assert.True(firstHeater.IsHeating);
-            Assert.True(secondHeater.IsHeating);
+            temperatureSensor.Temperature = 17; // 62° F
+            Assert.True(heater.IsHeating);
+            Assert.False(airConditioner.IsCooling);
 
-            temperatureSensor.Temperature = 20;
-            Assert.False(firstHeater.IsHeating);
-            Assert.True(secondHeater.IsHeating);
+            temperatureSensor.Temperature = 20; // 68° F
+            Assert.False(heater.IsHeating);
+            Assert.False(airConditioner.IsCooling);
 
-            temperatureSensor.Temperature = 22;
-            Assert.False(firstHeater.IsHeating);
-            Assert.False(secondHeater.IsHeating);
+            temperatureSensor.Temperature = 22; // 72° F
+            Assert.False(heater.IsHeating);
+            Assert.True(airConditioner.IsCooling);
 
 
-            temperatureSensor.RemoveListener(secondHeater);
-            temperatureSensor.Temperature = 17;
-            Assert.True(firstHeater.IsHeating);
-            Assert.False(secondHeater.IsHeating);
-            // secondHeater is no longer subscribed, so it wasn't notified of the temperature changes.
+            temperatureSensor.RemoveListener(heater);
+            temperatureSensor.Temperature = 17; // 62° F
+            Assert.False(heater.IsHeating);
+            Assert.False(airConditioner.IsCooling);
+            // heater is no longer subscribed, so it wasn't notified of the temperature changes.
         }
 
         #region Definition
@@ -132,6 +132,35 @@ namespace DesignPatterns.Behavioral
             public void Update()
             {
                 this.IsHeating = this._sensor.Temperature < this.MaxHeatingTemperature;
+            }
+        }
+
+        /// <summary>
+        /// Concrete Observer
+        /// </summary>
+        /// <remarks>
+        /// - Maintains a reference to the Concrete Subject.
+        /// - Stores state that should stay consistent with the Subject's.
+        /// - Implements the Observer updating interface to keep its state consistent with the subject's.
+        /// </remarks>
+        public class AirConditioner : ISensorListener
+        {
+            private readonly TemperatureSensor _sensor;
+
+            public AirConditioner(TemperatureSensor sensor, decimal minCoolingTemperature)
+            {
+                this.MinCoolingTemperature = minCoolingTemperature;
+                this._sensor = sensor;
+                this._sensor.AddListener(this);
+            }
+
+            public bool IsCooling { get; private set; }
+
+            public decimal MinCoolingTemperature { get; }
+
+            public void Update()
+            {
+                this.IsCooling = this._sensor.Temperature > this.MinCoolingTemperature;
             }
         }
 
