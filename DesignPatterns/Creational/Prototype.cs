@@ -4,6 +4,12 @@ namespace DesignPatterns.Creational
 {
     public class Prototype : DesignPattern
     {
+        /// <summary>
+        /// Client
+        /// </summary>
+        /// <remarks>
+        /// Creates a new object by asking a prototype to clone itself.
+        /// </remarks>
         public override void Execute()
         {
             var sheepCollection = new Sheep[]
@@ -16,12 +22,20 @@ namespace DesignPatterns.Creational
             {
                 Sheep clone = sheep.Clone();
                 clone.Shave();
+
                 Assert.NotEqual(sheep.Shaved, clone.Shaved);
                 Assert.Equal(sheep.HairColor, clone.HairColor);
             }
         }
 
         #region Definition
+
+        /// <summary>
+        /// Prototype
+        /// </summary>
+        /// <remarks>
+        /// Declares an interface for cloning itself.
+        /// </remarks>
         public abstract class Sheep
         {
             protected Sheep(string color)
@@ -40,10 +54,17 @@ namespace DesignPatterns.Creational
                 this.Shaved = true;
             }
         }
+
         #endregion
 
-        #region Concrete Implementation
+        #region Concrete Implementations
 
+        /// <summary>
+        /// Concrete Prototype
+        /// </summary>
+        /// <remarks>
+        /// Implements an operation for cloning itself
+        /// </remarks>
         public class BlackSheep : Sheep
         {
             public BlackSheep()
@@ -57,6 +78,12 @@ namespace DesignPatterns.Creational
             }
         }
 
+        /// <summary>
+        /// Concrete Prototype
+        /// </summary>
+        /// <remarks>
+        /// Implements an operation for cloning itself
+        /// </remarks>
         public class WhiteSheep : Sheep
         {
             public WhiteSheep()
@@ -69,6 +96,7 @@ namespace DesignPatterns.Creational
                 return new WhiteSheep();
             }
         }
+
         #endregion
     }
 }
