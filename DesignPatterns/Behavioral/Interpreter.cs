@@ -97,7 +97,7 @@ namespace DesignPatterns.Behavioral
 
         #endregion
 
-        #region Concrete Implementation
+        #region Concrete Implementations
 
         /// <summary>
         /// Non terminal expression
