@@ -27,6 +27,12 @@ namespace DesignPatterns.Structural
 
         #region Definition
 
+        /// <summary>
+        /// Client
+        /// </summary>
+        /// <remarks>
+        /// Collaborates with objects conforming to the Target interface.
+        /// </remarks>
         public class Phone
         {
             private readonly MAmp _maxMAmps;
@@ -50,11 +56,23 @@ namespace DesignPatterns.Structural
             }
         }
 
+        /// <summary>
+        /// Target
+        /// </summary>
+        /// <remarks>
+        /// Defines the domain-specific interface that Client uses.
+        /// </remarks>
         public interface IUsbSocket
         {
             MAmp GetPower();
         }
 
+        /// <summary>
+        /// Adaptee
+        /// </summary>
+        /// <remarks>
+        /// Defines an existing interface that needs adapting.
+        /// </remarks>
         public interface IAcSocket
         {
             Amp GetPower();
@@ -62,8 +80,9 @@ namespace DesignPatterns.Structural
 
         #endregion
 
-        #region Concrete Implementation
+        #region Concrete Implementations
 
+        /// <inheritdoc />
         public class AcOutlet : IAcSocket
         {
             private readonly Amp _amps;
@@ -79,6 +98,12 @@ namespace DesignPatterns.Structural
             }
         }
 
+        /// <summary>
+        /// Adapter
+        /// </summary>
+        /// <remarks>
+        /// Adapts the interface Adaptee to the Target interface.
+        /// </remarks>
         public class UsbAdapter : IUsbSocket
         {
             private readonly IAcSocket _socket;
@@ -98,6 +123,12 @@ namespace DesignPatterns.Structural
             }
         }
 
+        /// <summary>
+        /// Adapter
+        /// </summary>
+        /// <remarks>
+        /// Adapts the interface Adaptee to the Target interface.
+        /// </remarks>
         public class BadUsbAdapter : IUsbSocket
         {
             private readonly IAcSocket _socket;
@@ -113,6 +144,7 @@ namespace DesignPatterns.Structural
                 return (MAmp)(amps * 100);
             }
         }
+
         #endregion
     }
 }
