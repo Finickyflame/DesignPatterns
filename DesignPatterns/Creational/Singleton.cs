@@ -20,7 +20,13 @@ namespace DesignPatterns.Creational
             Assert.Equal(Government.Instance.FormedOn, instance.FormedOn);
         }
 
-        /* Singleton */
+        /// <summary>
+        /// Singleton
+        /// </summary>
+        /// <remarks>
+        /// - Defines an Instance operation that lets clients access its unique instance. Instance is a class operation.
+        /// - Responsible for creating and maintaining its own unique instance.
+        /// </remarks>
         public class Government
         {
             public static Government Instance { get; }
