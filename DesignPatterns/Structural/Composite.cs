@@ -21,17 +21,26 @@ namespace DesignPatterns.Structural
             Assert.Equal("Bundle of: Slow and Safe, The Beginnator", movieBundle.GetTitle());
         }
 
-        #region Definition
-
+        /// <summary>
+        /// Component
+        /// </summary>
+        /// <remarks>
+        /// - Is the abstraction for all components, including composite ones.
+        /// - Declares the interface for objects in the composition.
+        /// </remarks>
         public interface IMovie
         {
             string GetTitle();
         }
 
-        #endregion
 
-        #region Concrete Implementation
-
+        /// <summary>
+        /// Leaf
+        /// </summary>
+        /// <remarks>
+        /// - Represents leaf objects in the composition.
+        /// - Implements all Component methods.
+        /// </remarks>
         public class Movie : IMovie
         {
             private readonly string _title;
@@ -44,6 +53,14 @@ namespace DesignPatterns.Structural
             public string GetTitle() => this._title;
         }
 
+        /// <summary>
+        /// Composite
+        /// </summary>
+        /// <remarks>
+        /// - Represents a Component that has children.
+        /// - Implements methods to manipulate children.
+        /// - Implements all Component methods, generally by delegating them to its children.
+        /// </remarks>
         public class MovieBundle : IMovie
         {
             private readonly List<IMovie> _movies;
@@ -63,7 +80,5 @@ namespace DesignPatterns.Structural
                 return "Bundle of: " + string.Join(", ", this._movies.Select(b => b.GetTitle()));
             }
         }
-
-        #endregion
     }
 }
