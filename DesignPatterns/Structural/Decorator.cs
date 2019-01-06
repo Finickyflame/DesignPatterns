@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System;
+using Xunit;
 
 namespace DesignPatterns.Structural
 {
@@ -6,50 +7,154 @@ namespace DesignPatterns.Structural
     {
         public override void Execute()
         {
-            IMessage defaultMessage = new Message("Hello World!");
+            var normalDoor = new Door();
+            Assert.False(normalDoor.Opened);
 
-            Assert.Equal("Hello World!", defaultMessage.GetMessage());
+            normalDoor.Open();
+            Assert.True(normalDoor.Opened);
 
-            IMessage messageWithDecoration = new MessageWithDecoration(defaultMessage);
-            Assert.Equal("|!=* Hello World! *=!|", messageWithDecoration.GetMessage());
+            normalDoor.Close();
+            Assert.False(normalDoor.Opened);
+
+
+            var doorWithLock = new LockProtected(normalDoor);
+            Assert.False(doorWithLock.Opened);
+            Assert.True(doorWithLock.Locked);
+
+            Assert.Throws<DoorLockedException>(() => doorWithLock.Open());
+            Assert.False(doorWithLock.Opened);
+            Assert.True(doorWithLock.Locked);
+
+            doorWithLock.UnLock();
+            Assert.False(doorWithLock.Opened);
+            Assert.False(doorWithLock.Locked);
+
+            doorWithLock.Open();
+            Assert.True(doorWithLock.Opened);
+            Assert.False(doorWithLock.Locked);
+
+            doorWithLock.Close();
+            Assert.False(doorWithLock.Opened);
+            Assert.False(doorWithLock.Locked);
+
+            doorWithLock.Lock();
+            Assert.False(doorWithLock.Opened);
+            Assert.True(doorWithLock.Locked);
         }
 
-        #region Definition
-
-        public interface IMessage
+        /// <summary>
+        /// Component
+        /// </summary>
+        /// <remarks>
+        /// Defines the interface for objects that can have responsibilities added to them dynamically.
+        /// </remarks>
+        public interface IDoor
         {
-            string GetMessage();
+            bool Opened { get; }
+
+            void Open();
+
+            void Close();
         }
 
-        #endregion
 
-        #region Concrete Implementation
-
-        public class Message : IMessage
+        /// <summary>
+        /// Concrete Component
+        /// </summary>
+        /// <remarks>
+        /// Defines an object to which additional responsibilities can be attached.
+        /// </remarks>
+        public class Door : IDoor
         {
-            private readonly string _message;
+            public bool Opened { get; private set; }
 
-            public Message(string message)
+            public void Open()
             {
-                this._message = message;
+                this.Opened = true;
             }
 
-            public string GetMessage() => this._message;
+            public void Close()
+            {
+                this.Opened = false;
+            }
         }
 
-        /* Decorator */
-        public class MessageWithDecoration : IMessage
-        {
-            private readonly IMessage _message;
 
-            public MessageWithDecoration(IMessage message)
+        /// <summary>
+        /// Decorator
+        /// </summary>
+        /// <remarks>
+        /// Maintains a reference to a Component object and defines an interface that conforms to Component's interface.
+        /// </remarks>
+        public abstract class DoorDecorator : IDoor
+        {
+            private readonly IDoor _door;
+
+            protected DoorDecorator(IDoor door)
             {
-                this._message = message;
+                this._door = door;
             }
 
-            public string GetMessage() => $"|!=* {this._message.GetMessage()} *=!|";
+            public virtual bool Opened => this._door.Opened;
+
+            public virtual void Open() => this._door.Open();
+
+            public virtual void Close() => this._door.Close();
         }
 
-        #endregion
+        /// <summary>
+        /// Concrete Decorator
+        /// </summary>
+        /// <remarks>
+        /// Adds responsibilities to the component
+        /// </remarks>
+        public class LockProtected : DoorDecorator
+        {
+            public LockProtected(IDoor door)
+            : base(door)
+            {
+                this.Locked = true;
+            }
+
+            public bool Locked { get; private set; }
+
+
+            public override void Open()
+            {
+                if (this.Locked)
+                {
+                    throw new DoorLockedException();
+                }
+                base.Open();
+            }
+
+            public override void Close()
+            {
+                if (this.Locked)
+                {
+                    throw new DoorLockedException();
+                }
+                base.Close();
+            }
+
+            public void Lock()
+            {
+                this.Locked = true;
+            }
+
+            public void UnLock()
+            {
+                this.Locked = false;
+            }
+        }
+
+        public class DoorLockedException : Exception
+        {
+            public DoorLockedException()
+            : base("Door is locked.")
+            {
+
+            }
+        }
     }
 }
