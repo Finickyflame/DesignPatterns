@@ -1,42 +1,29 @@
-﻿using System;
-using Xunit;
+﻿namespace DesignPatterns.Structural;
 
-namespace DesignPatterns.Structural
+public class PrivateClassData
 {
-    public class PrivateClassData : DesignPattern
+    [Fact]
+    public void Execute()
     {
-        public override void Execute()
-        {
-            const double radius = 4;
+        const double radius = 4;
 
-            var circle = new Circle(radius);
-            Assert.Equal(radius * 2, circle.Diameter);
-            Assert.Equal(radius * 2 * Math.PI, circle.Circumference);
-        }
+        var circle = new Circle(radius);
+        Assert.Equal(radius * 2, circle.Diameter);
+        Assert.Equal(radius * 2 * Math.PI, circle.Circumference);
+    }
 
-        public class Circle
-        {
-            public Circle(double radius)
-            {
-                this.Data = new CircleData(radius);
-            }
+    public class Circle(double radius)
+    {
+        public double Circumference => Diameter * Math.PI;
 
-            private CircleData Data { get; }
+        public double Diameter => Data.Radius * 2;
 
-            public double Circumference => this.Diameter * Math.PI;
+        private CircleData Data { get; } = new(radius);
+    }
 
-            public double Diameter => this.Data.Radius * 2;
-        }
-
-        /* Private class data */
-        public class CircleData
-        {
-            public CircleData(double radius)
-            {
-                this.Radius = radius;
-            }
-
-            public double Radius { get; }
-        }
+    /* Private class data */
+    public class CircleData(double radius)
+    {
+        public double Radius { get; } = radius;
     }
 }
