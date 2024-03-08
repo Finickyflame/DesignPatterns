@@ -1,204 +1,166 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Xunit;
+﻿namespace DesignPatterns.Behavioral;
 
-namespace DesignPatterns.Behavioral
+public class ChainOfResponsibility
 {
-    public class ChainOfResponsibility : DesignPattern
+    /// <summary>
+    /// Client
+    /// </summary>
+    /// <remarks>
+    /// Initiates the request to a ConcreteHandler object on the chain.
+    /// </remarks>
+    [Fact]
+    public void Execute()
     {
-        /// <summary>
-        /// Client
-        /// </summary>
-        /// <remarks>
-        /// Initiates the request to a ConcreteHandler object on the chain.
-        /// </remarks>
-        public override void Execute()
+        // Create the customer support team
+        CustomerSupport frontDesk = new FrontDesk();
+        CustomerSupport lead = new Lead();
+        CustomerSupport engineer = new Engineer();
+        CustomerSupport manager = new Manager();
+
+        // Define the hierarchy: [FrontDesk] -> [Lead] -> [Engineer] -> [Manager]
+        frontDesk.SetEscalation(lead);
+        lead.SetEscalation(engineer);
+        engineer.SetEscalation(manager);
+
+
+        var simpleProblem = new Problem(ProblemSeverity.Simple);
+        frontDesk.SolveProblem(simpleProblem);
+        // The problem should be directly resolved by the FrontDesk
+        Assert.True(simpleProblem.Solved);
+        Assert.Equal(frontDesk, simpleProblem.SolvedBy);
+
+
+        var criticalProblem = new Problem(ProblemSeverity.Critical);
+        frontDesk.SolveProblem(criticalProblem);
+        // The problem should go through [FrontDesk] -> [Lead] -> [Engineer]
+        Assert.True(criticalProblem.Solved);
+        Assert.NotEqual(frontDesk, criticalProblem.SolvedBy);
+        Assert.NotEqual(lead, criticalProblem.SolvedBy);
+        Assert.Equal(engineer, criticalProblem.SolvedBy);
+    }
+
+    public enum ProblemSeverity
+    {
+        NoProblem,
+        Simple,
+        Troublesome,
+        Urgent,
+        Critical
+    }
+
+    /// <summary>
+    /// Handler
+    /// </summary>
+    /// <remarks>
+    /// - Defines an interface for handling the requests.
+    /// - Can implements the successor link.
+    /// </remarks>
+    public abstract class CustomerSupport
+    {
+        private CustomerSupport _escalatedSupport;
+
+        public void SetEscalation(CustomerSupport escalatedSupport)
         {
-            // Create the customer support team
-            CustomerSupport frontDesk = new FrontDesk();
-            CustomerSupport lead = new Lead();
-            CustomerSupport engineer = new Engineer();
-            CustomerSupport manager = new Manager();
-
-            // Define the hierarchy: [FrontDesk] -> [Lead] -> [Engineer] -> [Manager]
-            frontDesk.SetEscalation(lead);
-            lead.SetEscalation(engineer);
-            engineer.SetEscalation(manager);
-
-
-            var simpleProblem = new Problem(ProblemSeverity.Simple);
-            frontDesk.SolveProblem(simpleProblem);
-            // The problem should be directly resolved by the FrontDesk
-            Assert.True(simpleProblem.Solved);
-            Assert.Equal(frontDesk, simpleProblem.SolvedBy);
-
-
-            var criticalProblem = new Problem(ProblemSeverity.Critical);
-            frontDesk.SolveProblem(criticalProblem);
-            // The problem should go through [FrontDesk] -> [Lead] -> [Engineer]
-            Assert.True(criticalProblem.Solved);
-            Assert.NotEqual(frontDesk, criticalProblem.SolvedBy);
-            Assert.NotEqual(lead, criticalProblem.SolvedBy);
-            Assert.Equal(engineer, criticalProblem.SolvedBy);
+            _escalatedSupport = escalatedSupport;
         }
 
-        #region Definition
-
-        public enum ProblemSeverity
+        public void SolveProblem(Problem problem)
         {
-            NoProblem,
-            Simple,
-            Troublesome,
-            Urgent,
-            Critical
-        }
-
-        /// <summary>
-        /// Handler
-        /// </summary>
-        /// <remarks>
-        /// - Defines an interface for handling the requests.
-        /// - Can implements the successor link.
-        /// </remarks>
-        public abstract class CustomerSupport
-        {
-            private CustomerSupport _escalatedSupport;
-
-            public void SetEscalation(CustomerSupport escalatedSupport)
+            if (CanSolveProblem(problem))
             {
-                this._escalatedSupport = escalatedSupport;
+                problem.SolveBy(this);
             }
-
-            public void SolveProblem(Problem problem)
+            else
             {
-                if (this.CanSolveProblem(problem))
-                {
-                    problem.SolveBy(this);
-                }
-                else
-                {
-                    this.EscalateProblem(problem);
-                }
-            }
-
-            /* The concrete implementations must define the severities they can handle */
-            protected abstract IEnumerable<ProblemSeverity> Responsibilities { get; }
-
-            private bool CanSolveProblem(Problem problem)
-            {
-                return this.Responsibilities?.Any(severity => severity == problem.Severity) ?? false;
-
-                /*
-                 * Longer version:
-                 *
-                 * if(this.Responsibilities != null)
-                 * {
-                 *     return this.Responsibilities.Any(severity => severity == problem.Severity);
-                 * }
-                 * return false;
-                 */
-            }
-
-            private void EscalateProblem(Problem problem)
-            {
-                this._escalatedSupport?.SolveProblem(problem);
-            }
-        }
-
-        public class Problem
-        {
-            public Problem(ProblemSeverity severity)
-            {
-                this.Severity = severity;
-            }
-
-
-            public ProblemSeverity Severity { get; }
-
-            public bool Solved => this.SolvedBy != null;
-
-            public CustomerSupport SolvedBy { get; private set; }
-
-
-            public void SolveBy(CustomerSupport customerSupport)
-            {
-                this.SolvedBy = customerSupport;
-            }
-        }
-
-        #endregion
-
-        #region Concrete Implementations
-
-        /// <summary>
-        /// Concrete Handler
-        /// </summary>
-        /// <remarks>
-        /// Handles requests it is responsible for.
-        /// </remarks>
-        public class FrontDesk : CustomerSupport
-        {
-            protected override IEnumerable<ProblemSeverity> Responsibilities
-            {
-                get
-                {
-                    yield return ProblemSeverity.NoProblem;
-                    yield return ProblemSeverity.Simple;
-                }
+                EscalateProblem(problem);
             }
         }
 
         /// <summary>
-        /// Concrete Handler
+        /// The concrete implementations must define if it can solve the problem.
         /// </summary>
-        /// <remarks>
-        /// Handles requests it is responsible for.
-        /// </remarks>
-        public class Lead : CustomerSupport
-        {
-            protected override IEnumerable<ProblemSeverity> Responsibilities
-            {
-                get
-                {
-                    yield return ProblemSeverity.Troublesome;
-                }
-            }
-        }
+        protected abstract bool CanSolveProblem(Problem problem);
 
-        /// <summary>
-        /// Concrete Handler
-        /// </summary>
-        /// <remarks>
-        /// Handles requests it is responsible for.
-        /// </remarks>
-        public class Engineer : CustomerSupport
+        private void EscalateProblem(Problem problem)
         {
-            protected override IEnumerable<ProblemSeverity> Responsibilities
-            {
-                get
-                {
-                    yield return ProblemSeverity.Critical;
-                }
-            }
+            _escalatedSupport?.SolveProblem(problem);
         }
+    }
 
-        /// <summary>
-        /// Concrete Handler
-        /// </summary>
-        /// <remarks>
-        /// Handles requests it is responsible for.
-        /// </remarks>
-        public class Manager : CustomerSupport
+    public class Problem(ProblemSeverity severity)
+    {
+        public ProblemSeverity Severity => severity;
+
+        public bool Solved => SolvedBy != null;
+
+        public CustomerSupport SolvedBy { get; private set; }
+
+
+        public void SolveBy(CustomerSupport customerSupport)
         {
-            protected override IEnumerable<ProblemSeverity> Responsibilities
-            {
-                get
-                {
-                    yield return ProblemSeverity.Urgent;
-                }
-            }
+            SolvedBy = customerSupport;
         }
+    }
 
-        #endregion
+    /// <summary>
+    /// Concrete Handler
+    /// </summary>
+    /// <remarks>
+    /// Handles requests it is responsible for.
+    /// </remarks>
+    public class FrontDesk : CustomerSupport
+    {
+        private static readonly ProblemSeverity[] HandledSeverities =
+        [
+            ProblemSeverity.NoProblem,
+            ProblemSeverity.Simple
+        ];
+
+        protected override bool CanSolveProblem(Problem problem)
+        {
+            return Array.Exists(HandledSeverities, severity => problem.Severity == severity);
+        }
+    }
+
+    /// <summary>
+    /// Concrete Handler
+    /// </summary>
+    /// <remarks>
+    /// Handles requests it is responsible for.
+    /// </remarks>
+    public class Lead : CustomerSupport
+    {
+        protected override bool CanSolveProblem(Problem problem)
+        {
+            return problem.Severity == ProblemSeverity.Troublesome;
+        }
+    }
+
+    /// <summary>
+    /// Concrete Handler
+    /// </summary>
+    /// <remarks>
+    /// Handles requests it is responsible for.
+    /// </remarks>
+    public class Engineer : CustomerSupport
+    {
+        protected override bool CanSolveProblem(Problem problem)
+        {
+            return problem.Severity == ProblemSeverity.Critical;
+        }
+    }
+
+    /// <summary>
+    /// Concrete Handler
+    /// </summary>
+    /// <remarks>
+    /// Handles requests it is responsible for.
+    /// </remarks>
+    public class Manager : CustomerSupport
+    {
+        protected override bool CanSolveProblem(Problem problem)
+        {
+            return problem.Severity == ProblemSeverity.Urgent;
+        }
     }
 }
